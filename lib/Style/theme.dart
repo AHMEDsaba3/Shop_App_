@@ -41,7 +41,7 @@ ThemeData lightTheme=ThemeData(
     useMaterial3: true,
     textTheme: TextTheme(
         bodyLarge: TextStyle(
-            fontSize: 10,
+            fontSize: 20,
             fontWeight:FontWeight.w600,
             color: Colors.black
         )
