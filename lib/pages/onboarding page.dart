@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app_api/Constant/components.dart';
+import 'package:shop_app_api/Constant/constans.dart';
 import 'package:shop_app_api/pages/login_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../network/local/cache_helper.dart';
 
 class CustomClipPath extends CustomClipper<Path> {
   @override
@@ -42,6 +45,7 @@ class OnBoardingPage extends StatefulWidget {
 }
 
 class _OnBoardPageState extends State<OnBoardingPage> {
+
   var PageViewController = PageController();
   List<BoardingModel> Boarding = [
     BoardingModel('assets/OnBoardImage/onboard1.png', 'CHOOSE ITEM',
@@ -52,10 +56,17 @@ class _OnBoardPageState extends State<OnBoardingPage> {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet sollicitudin nunc, quis consequat quam faucibus id. Nam rutrum elementum orci eget commodo. Aliquam ut dolor augue. Nulla volutpat erat.'),
   ];
   bool isLast =false;
-
+  void Submit(){
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
+      if(value){
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+      }
+    },);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         body: Column(
           children: [
             Expanded(
@@ -90,15 +101,15 @@ class _OnBoardPageState extends State<OnBoardingPage> {
                         dotHeight: heightR(10, context),
                         dotWidth: widthR(10, context),
                         spacing: 5,
-                        activeDotColor: Colors.tealAccent), // your preferred effect
+                        activeDotColor: defaultColor), // your preferred effect
                   ),
                   Spacer(),
                   FloatingActionButton(
-                    backgroundColor: Colors.tealAccent,
-                    child: Icon(Icons.arrow_forward_ios),
+                    backgroundColor: defaultColor,
+                    child: Icon(Icons.arrow_forward_ios,color: Colors.white,),
                     onPressed: () {
                       if(isLast==true){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
+                        Submit();
                       }else{
                         PageViewController.nextPage(
                             duration: Duration(milliseconds: 750),
@@ -122,12 +133,9 @@ class _OnBoardPageState extends State<OnBoardingPage> {
           children: [
             ClipPath(
               child: Container(
-                child: TextButton(onPressed: () {
-
-                }, child: Text('Skip')),
                 height: MediaQuery.of(context).size.height * 65 / 100,
                 width: double.infinity,
-                color: Colors.tealAccent.shade200,
+                color: defaultColor,
               ),
               clipper: CustomClipPath(),
             ),
@@ -140,9 +148,7 @@ class _OnBoardPageState extends State<OnBoardingPage> {
               top:heightR(30, context),
               left: widthR(320, context),
               child: TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage(),));
-                  }, child: Text('Skip',style: TextStyle(color: Colors.black),)),
+                  onPressed: Submit, child: Text('Skip',style: TextStyle(color: Colors.white),)),
             )
           ],
         ),
