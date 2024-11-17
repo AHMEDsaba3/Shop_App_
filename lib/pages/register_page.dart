@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_api/Constant/components.dart';
 import 'package:shop_app_api/Constant/constans.dart';
+import 'package:shop_app_api/pages/home_page.dart';
 import 'package:shop_app_api/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -179,7 +180,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                print('sinup successful');
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
                               }
                             },
                             style: ElevatedButton.styleFrom(

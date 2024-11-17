@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_app_api/Constant/components.dart';
 import 'package:shop_app_api/Constant/constans.dart';
+import 'package:shop_app_api/pages/home_page.dart';
 import 'package:shop_app_api/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -103,7 +104,12 @@ class _LoginPageState extends State<LoginPage> {
                         ElevatedButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              print('Login successful');
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
