@@ -50,7 +50,7 @@ Widget defultTextForm(
           validator != null ? AutovalidateMode.onUserInteraction : null,
       controller: Controller,
       obscureText: ispassword,
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: Colors.black,fontSize: sizeR(17, context)),
       decoration: InputDecoration(
         label: Text(
           label,
@@ -80,15 +80,32 @@ Widget defultTextForm(
   );
 }
 
-Future<bool?> defualtFlutterToast(String massage,Color color){
-  return Fluttertoast.showToast(
+void defualtFlutterToast({required String massage,required ToastState state}){
+   Fluttertoast.showToast(
       msg: massage,
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 5,
-      backgroundColor:color,
+      backgroundColor:chooseToastColor(state),
       textColor: Colors.white,
       fontSize: 16.0
   );
+}
+
+enum ToastState {SUCCESS,ERROR,WARNING}
+Color chooseToastColor(ToastState state){
+  Color color;
+  switch(state){
+    case ToastState.SUCCESS:
+      color= Colors.green;
+    break;
+    case ToastState.ERROR:
+      color= Colors.red;
+      break;
+    case ToastState.WARNING:
+      color= Colors.amber;
+      break;
+  }
+  return color;
 }
 

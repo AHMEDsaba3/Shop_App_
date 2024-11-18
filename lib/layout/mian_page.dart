@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:shop_app_api/Constant/constans.dart';
-import 'package:shop_app_api/shared/cubit/appCubit.dart';
-import 'package:shop_app_api/shared/cubit/appStates.dart';
+import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
+import 'package:shop_app_api/shared/HomeCubit/appStates.dart';
+
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});

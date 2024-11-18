@@ -1,23 +1,36 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Constant/components.dart';
 import 'package:shop_app_api/Constant/constans.dart';
+import 'package:shop_app_api/model/home_data_model.dart';
+import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
+import 'package:shop_app_api/shared/HomeCubit/appStates.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-          child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(), child: getBody(context))),
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        AppCubit cubti = AppCubit.get(context);
+        var model = cubti.homeDataModel;
+
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SafeArea(
+              child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  child: getBody(context, model ?? null))),
+        );
+      },
     );
   }
 
-  Widget getBody(context) {
+  Widget getBody(context, HomeDataModel? model) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -108,7 +121,7 @@ class HomePage extends StatelessWidget {
             Container(
               height: heightR(45, context),
               child: ListView.separated(
-                scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) => CategoryWidget(),
                   separatorBuilder: (context, index) => SizedBox(
@@ -120,20 +133,32 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: heightR(10, context),
             ),
-            GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 1 / 1.2,
-              children: List.generate(
-                10,
-                (index) {
-                  return BuildproductView(context);
-                },
+            if (model != null &&
+                model!.data != null &&
+                model!.data!.products != null)
+              GridView.count(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 1 / 1.37,
+                children: List.generate(
+                  model.data!.products.length,
+                  (index) {
+                    return BuildproductView(context,
+                        title: model.data!.products[index].name ?? '',
+                        price: model.data!.products[index].price ?? "",
+                        oldPrice: model.data!.products[index].OldPrice ?? "",
+                        image: model.data!.products[index].image ?? "",
+                        discount: model.data!.products[index].discount);
+                  },
+                ),
+              )
+            else
+              Center(
+                child: CircularProgressIndicator(),
               ),
-            )
           ],
         ),
       ),
@@ -218,39 +243,78 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget BuildproductView(context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.asset(
-          'assets/ShopApp.png',
-          height: heightR(150, context),
-          color: Colors.red,
-          width: double.infinity,
-        ),
-        Text(
-          'Title',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 14, height: 1.4),
-        ),
-        Row(
-          children: [
-            Text(
-              'price',
-              style: TextStyle(fontSize: 12, color: defaultColor),
+  Widget BuildproductView(context,
+      {required String image,
+      required String title,
+      required dynamic price,
+      required dynamic oldPrice,
+      required dynamic discount}) {
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12),
+          borderRadius: BorderRadius.circular(sizeR(10, context))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            alignment: Alignment.bottomLeft,
+            children: [
+              Image(
+                image: NetworkImage(image),
+                height: heightR(150, context),
+                width: double.infinity,
+              ),
+              Positioned(top: 0,
+                right: 0,
+                child: IconButton(onPressed: () {},style: ButtonStyle(backgroundColor:WidgetStatePropertyAll(Colors.white) ),
+                    icon: Icon(CupertinoIcons.heart)),
+              ),
+              if (discount != 0)
+                Container(
+                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Text(
+                        'Discount',
+                        style: TextStyle(fontSize: 10, color: Colors.white),
+                      ),
+                    ))
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: sizeR(14, context), height: 1.4),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      price.toString(),
+                      style: TextStyle(
+                          fontSize: sizeR(12, context), color: defaultColor),
+                    ),
+                    SizedBox(
+                      width: widthR(10, context),
+                    ),
+                    if (discount != 0)
+                      Text(
+                        oldPrice.toString(),
+                        style: TextStyle(
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough),
+                      )
+                  ],
+                ),
+              ],
             ),
-            SizedBox(
-              width: widthR(10, context),
-            ),
-            Text(
-              'descount',
-              style: TextStyle(
-                  color: Colors.grey, decoration: TextDecoration.lineThrough),
-            )
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 

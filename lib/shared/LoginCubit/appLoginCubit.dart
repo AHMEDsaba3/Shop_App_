@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/model/login_model.dart';
 import 'package:shop_app_api/network/remote/dio_hellper.dart';
 import 'package:shop_app_api/network/remote/endpoint.dart';
-import 'package:shop_app_api/shared/cubit/appLoginState.dart';
+import 'package:shop_app_api/shared/LoginCubit/appLoginState.dart';
 
 class AppLoginCubit extends Cubit<Apploginstate>{
   AppLoginCubit() : super(InatialApploginState());

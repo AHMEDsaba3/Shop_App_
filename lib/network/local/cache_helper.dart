@@ -24,4 +24,9 @@ class CacheHelper {
     } else
       return await preferences?.setDouble(key, value);
   }
+
+  static Future<bool> removeData({required String key})async{
+    return await preferences!.remove(key);
+  }
+
 }
