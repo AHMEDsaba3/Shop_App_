@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Constant/constans.dart';
+import 'package:shop_app_api/model/categories_model.dart';
 import 'package:shop_app_api/model/home_data_model.dart';
 import 'package:shop_app_api/network/remote/dio_hellper.dart';
 import 'package:shop_app_api/network/remote/endpoint.dart';
@@ -44,6 +45,7 @@ class AppCubit extends Cubit<AppStates> {
   ];
 
   HomeDataModel? homeDataModel;
+  CategoriesModel? categoriesModel;
   void changeBottomNavBar(int index) {
     currentIndex = index;
     emit(AppBottomNavState());
@@ -58,6 +60,19 @@ class AppCubit extends Cubit<AppStates> {
     },).catchError((e){
       print(e.toString());
       emit(HomeDataErrorState());
+    });
+
+  }
+
+  void GetCategoriesData(){
+    emit(categoriesDataLoadingState());
+    DioHellper.GetData(url: Categories).then((value) {
+      categoriesModel=CategoriesModel.fromJson(value.data);
+      print(value.data.toString());
+      emit(categoriesDataSuccessState());
+    },).catchError((e){
+      print(e.toString());
+      emit(categoriesDataErrorState());
     });
 
   }

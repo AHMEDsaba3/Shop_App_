@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => AppCubit()..GetHomeData(),),
+      BlocProvider(create: (context) => AppCubit()..GetHomeData()..GetCategoriesData(),),
       BlocProvider(create: (context) => AppLoginCubit(),),
     ],
       child: MaterialApp(

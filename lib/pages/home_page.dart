@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Constant/components.dart';
 import 'package:shop_app_api/Constant/constans.dart';
+import 'package:shop_app_api/model/categories_model.dart';
 import 'package:shop_app_api/model/home_data_model.dart';
 import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
 import 'package:shop_app_api/shared/HomeCubit/appStates.dart';
@@ -18,20 +19,20 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         AppCubit cubti = AppCubit.get(context);
         var model = cubti.homeDataModel;
-        List<Widget> advList=[];
+        var modelCate = cubti.categoriesModel;
 
         return Scaffold(
           backgroundColor: Colors.white,
           body: SafeArea(
               child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
-                  child: getBody(context, model ?? null))),
+                  child: getBody(context, model ?? null,modelCate??null))),
         );
       },
     );
   }
 
-  Widget getBody(context, HomeDataModel? model) {
+  Widget getBody(context, HomeDataModel? model,CategoriesModel? modelCate) {
     List<Widget> advList = [];
 
     if (model != null && model.data != null && model.data!.banners != null) {
@@ -142,16 +143,22 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: heightR(10, context),
             ),
+            if(modelCate != null &&
+                modelCate!.data != null &&
+                modelCate!.data!.cateData != null)
             Container(
               height: heightR(45, context),
               child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => CategoryWidget(),
+                  itemBuilder: (context, index) => CategoryWidget(title: modelCate.data!.cateData[index].name??''),
                   separatorBuilder: (context, index) => SizedBox(
                         width: widthR(10, context),
                       ),
-                  itemCount: 10),
+                  itemCount: modelCate!.data!.cateData.length),
+            )
+            else  Center(
+              child: CircularProgressIndicator(),
             ),
 
             SizedBox(
@@ -344,12 +351,12 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget CategoryWidget() {
+  Widget CategoryWidget({required String title}) {
     return OutlinedButton(
         onPressed: () {},
         style: OutlinedButton.styleFrom(backgroundColor: Colors.black),
         child: Text(
-          'title',
+          title,
           style: TextStyle(
               color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700),
         ));
