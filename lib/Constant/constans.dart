@@ -1,7 +1,7 @@
 
 
 //Api
-//base url:
+//base url:https://fakestoreapi.com/
 //method (url):
 //queries:
 import 'dart:ui';

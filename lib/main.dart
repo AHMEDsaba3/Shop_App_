@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Style/theme.dart';
 import 'package:shop_app_api/layout/mian_page.dart';
 import 'package:shop_app_api/network/local/cache_helper.dart';
+import 'package:shop_app_api/network/remote/dio_hellper.dart';
 import 'package:shop_app_api/pages/login_page.dart';
 import 'package:shop_app_api/pages/onboarding%20page.dart';
 import 'package:shop_app_api/shared/BlocObserver.dart';
@@ -13,6 +14,7 @@ import 'package:shop_app_api/shared/cubit/appCubit.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
+  DioHellper.init();
   await CacheHelper.init();
   bool onBoarding=CacheHelper.getData(key: 'onBoarding')??false;
   print(onBoarding);
@@ -32,8 +34,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Shop App',
         theme: lightTheme,
-        home: MainPage(),
-        //onBoarding ? LoginPage():OnBoardingPage(),
+        home: onBoarding ? LoginPage():OnBoardingPage(),
       
           debugShowCheckedModeBanner: false,
       ),

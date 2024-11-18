@@ -2,19 +2,21 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app_api/network/remote/dio_hellper.dart';
+import 'package:shop_app_api/network/remote/endpoint.dart';
 import 'package:shop_app_api/pages/cart_page.dart';
 import 'package:shop_app_api/pages/favorite_page.dart';
 import 'package:shop_app_api/pages/home_page.dart';
 import 'package:shop_app_api/pages/profile_page.dart';
 import 'package:shop_app_api/shared/cubit/appStates.dart';
 
-class AppCubit extends Cubit<AppStates>{
+class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(InatialState()) {}
 
   static AppCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
 
-  List<BottomNavigationBarItem> bottomItems=[
+  List<BottomNavigationBarItem> bottomItems = [
     const BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: "Home",
@@ -31,20 +33,18 @@ class AppCubit extends Cubit<AppStates>{
       icon: Icon(Icons.person),
       label: "Profile",
     ),
-
   ];
-
-  List<Widget> Screens=[
+  List<Widget> Screens = [
     const HomePage(),
     const FavoritePage(),
     const CartPage(),
     const ProfilePage()
   ];
-  void changeBottomNavBar(int index){
-    currentIndex= index;
+
+  void changeBottomNavBar(int index) {
+    currentIndex = index;
     emit(AppBottomNavState());
   }
 
+
 }
-
-

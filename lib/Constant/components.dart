@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 double heightR(double x, BuildContext context) {
   var h = MediaQuery.of(context).size.height;
@@ -78,3 +79,16 @@ Widget defultTextForm(
     ),
   );
 }
+
+Future<bool?> defualtFlutterToast(String massage,Color color){
+  return Fluttertoast.showToast(
+      msg: massage,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 5,
+      backgroundColor:color,
+      textColor: Colors.white,
+      fontSize: 16.0
+  );
+}
+
