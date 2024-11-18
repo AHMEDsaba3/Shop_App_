@@ -48,7 +48,8 @@ class HomePage extends StatelessWidget {
     //     );
     //   }).toList();
     // }
-    return Padding(
+    if(model != null && model.data != null&&advList.isNotEmpty&&modelCate != null &&modelCate!.data != null) {
+      return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
         child: Column(
@@ -102,7 +103,7 @@ class HomePage extends StatelessWidget {
               height: heightR(30, context),
             ),
             //////////advertisements /////////////
-            if(advList.isNotEmpty)
+            // if(advList.isNotEmpty)
               Container(
               height: heightR(160, context),
               width: double.maxFinite,
@@ -122,11 +123,10 @@ class HomePage extends StatelessWidget {
                       autoPlayAnimationDuration: Duration(seconds: 1),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       scrollDirection: Axis.horizontal)),
-            )
-            else
-              Center(
-                child: CircularProgressIndicator(),
-              ),
+            ),
+            // else
+            //   Center(
+            //     child: LinearProgressIndicator()),
             SizedBox(
               height: heightR(20, context),
             ),
@@ -143,9 +143,9 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: heightR(10, context),
             ),
-            if(modelCate != null &&
-                modelCate!.data != null &&
-                modelCate!.data!.cateData != null)
+            // if(modelCate != null &&
+            //     modelCate!.data != null &&
+            //     modelCate!.data!.cateData != null)
             Container(
               height: heightR(45, context),
               child: ListView.separated(
@@ -156,10 +156,8 @@ class HomePage extends StatelessWidget {
                         width: widthR(10, context),
                       ),
                   itemCount: modelCate!.data!.cateData.length),
-            )
-            else  Center(
-              child: CircularProgressIndicator(),
             ),
+            // else  LinearProgressIndicator(),
 
             SizedBox(
               height: heightR(10, context),
@@ -167,9 +165,9 @@ class HomePage extends StatelessWidget {
 
             //////////Products /////////////
 
-            if (model != null &&
-                model!.data != null &&
-                model!.data!.products != null)
+            // if (model != null &&
+            //     model!.data != null &&
+            //     model!.data!.products != null)
               GridView.count(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -189,14 +187,17 @@ class HomePage extends StatelessWidget {
                   },
                 ),
               )
-            else
-              Center(
-                child: CircularProgressIndicator(),
-              ),
+            // else
+            //   Center(
+            //     child: CircularProgressIndicator(),
+            //   ),
           ],
         ),
       ),
     );
+    } else{
+      return Center(child: LinearProgressIndicator(color: defaultColor,));
+    }
   }
 
   Widget adv_body({required String image,required int saleNo, context}) {

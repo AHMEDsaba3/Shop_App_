@@ -25,6 +25,9 @@ class MainPage extends StatelessWidget {
                 right: 0,
                 bottom: 0,
                 child: SnakeNavigationBar.color(
+                  shadowColor: Colors.black,
+                  elevation: 10,
+                  showSelectedLabels: true,
                   padding: EdgeInsets.all(20),
                   snakeShape: SnakeShape.circle,
                   backgroundColor: defaultColor,

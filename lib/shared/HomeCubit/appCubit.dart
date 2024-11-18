@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Constant/constans.dart';
+import 'package:shop_app_api/model/Profile_model.dart';
 import 'package:shop_app_api/model/categories_model.dart';
 import 'package:shop_app_api/model/home_data_model.dart';
 import 'package:shop_app_api/network/remote/dio_hellper.dart';
@@ -46,6 +47,7 @@ class AppCubit extends Cubit<AppStates> {
 
   HomeDataModel? homeDataModel;
   CategoriesModel? categoriesModel;
+  ProfileModel? profileModel;
   void changeBottomNavBar(int index) {
     currentIndex = index;
     emit(AppBottomNavState());
@@ -55,7 +57,6 @@ class AppCubit extends Cubit<AppStates> {
     emit(HomeDataLoadingState());
     DioHellper.GetData(url: Home,token: token).then((value) {
       homeDataModel=HomeDataModel.fromJson(value.data);
-      print(value.data.toString());
       emit(HomeDataSuccessState());
     },).catchError((e){
       print(e.toString());
@@ -68,11 +69,23 @@ class AppCubit extends Cubit<AppStates> {
     emit(categoriesDataLoadingState());
     DioHellper.GetData(url: Categories).then((value) {
       categoriesModel=CategoriesModel.fromJson(value.data);
-      print(value.data.toString());
       emit(categoriesDataSuccessState());
     },).catchError((e){
       print(e.toString());
       emit(categoriesDataErrorState());
+    });
+
+  }
+
+  void GetProfileData(){
+    emit(profileDataLoadingState());
+    DioHellper.GetData(url: Profile,token: token).then((value) {
+      profileModel=ProfileModel.fromJson(value.data);
+      print(value.data.toString());
+      emit(profileDataSuccessState());
+    },).catchError((e){
+      print(e.toString());
+      emit(profileDataErrorState());
     });
 
   }
