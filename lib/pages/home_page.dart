@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         AppCubit cubti = AppCubit.get(context);
         var model = cubti.homeDataModel;
+        List<Widget> advList=[];
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -31,6 +32,21 @@ class HomePage extends StatelessWidget {
   }
 
   Widget getBody(context, HomeDataModel? model) {
+    List<Widget> advList = [];
+
+    if (model != null && model.data != null && model.data!.banners != null) {
+      advList = model.data!.banners
+          .map((banner) => Image.network(banner.image??'', fit: BoxFit.cover))
+          .toList();
+    }
+    // if (model != null && model.data != null && model.data!.banners != null) {
+    //   advList = model.data!.banners.map((banner) {
+    //     return adv_body(
+    //       image: banner.image ?? '',
+    //       context: context,
+    //     );
+    //   }).toList();
+    // }
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
@@ -85,14 +101,16 @@ class HomePage extends StatelessWidget {
               height: heightR(30, context),
             ),
             //////////advertisements /////////////
-            Container(
+            if(advList.isNotEmpty)
+              Container(
               height: heightR(160, context),
               width: double.maxFinite,
               child: CarouselSlider(
-                  items: [
-                    adv_body('assets/adv/adv1.png', 50, context),
-                    adv_body('assets/adv/adv2.png', 50, context),
-                  ],
+                  items: advList,
+                  // items: [
+                  //   adv_body('assets/adv/adv1.png', 50, context),
+                  //   adv_body('assets/adv/adv2.png', 50, context),
+                  // ],
                   options: CarouselOptions(
                       initialPage: 0,
                       enableInfiniteScroll: true,
@@ -103,15 +121,21 @@ class HomePage extends StatelessWidget {
                       autoPlayAnimationDuration: Duration(seconds: 1),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       scrollDirection: Axis.horizontal)),
-            ),
+            )
+            else
+              Center(
+                child: CircularProgressIndicator(),
+              ),
             SizedBox(
               height: heightR(20, context),
             ),
+
+            //////////Categories /////////////
+
             Text(
               'Categories',
               style: TextStyle(
                   color: Colors.black,
-                  fontFamily: 'Poppins',
                   fontSize: sizeR(20, context),
                   fontWeight: FontWeight.w700),
             ),
@@ -133,6 +157,9 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: heightR(10, context),
             ),
+
+            //////////Products /////////////
+
             if (model != null &&
                 model!.data != null &&
                 model!.data!.products != null)
@@ -165,7 +192,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget adv_body(String image, int saleNo, context) {
+  Widget adv_body({required String image,required int saleNo, context}) {
     return Container(
       width: widthR(340, context),
       clipBehavior: Clip.hardEdge,
@@ -230,7 +257,6 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: sizeR(10, context),
-                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w700),
                     ),
                   ),
