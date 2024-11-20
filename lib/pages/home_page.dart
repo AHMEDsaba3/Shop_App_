@@ -6,6 +6,7 @@ import 'package:shop_app_api/Constant/components.dart';
 import 'package:shop_app_api/Constant/constans.dart';
 import 'package:shop_app_api/model/categories_model.dart';
 import 'package:shop_app_api/model/home_data_model.dart';
+import 'package:shop_app_api/pages/product_details_page.dart';
 import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
 import 'package:shop_app_api/shared/HomeCubit/appStates.dart';
 
@@ -188,15 +189,28 @@ class HomePage extends StatelessWidget {
                 children: List.generate(
                   model.data!.products.length,
                   (index) {
-                    return BuildproductView(context,
-                        title: model.data!.products[index].name ?? '',
-                        price: model.data!.products[index].price ?? "",
-                        oldPrice: model.data!.products[index].OldPrice ?? "",
-                        image: model.data!.products[index].image ?? "",
-                        discount: model.data!.products[index].discount,
-                        model: model,
-                        cubit: cubit,
-                        index: index);
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsPage(
+                          id: model.data!.products[index].id??0,
+                          title: model.data!.products[index].name??'',
+                          description: model.data!.products[index].description??'',
+                          discount: model.data!.products[index].discount??'',
+                          OldPrice: model.data!.products[index].OldPrice??'',
+                          price: model.data!.products[index].price??'',
+                          image: model.data!.products[index].image??'',
+                        ),));
+                      },
+                      child: BuildproductView(context,
+                          title: model.data!.products[index].name ?? '',
+                          price: model.data!.products[index].price ?? "",
+                          oldPrice: model.data!.products[index].OldPrice ?? "",
+                          image: model.data!.products[index].image ?? "",
+                          discount: model.data!.products[index].discount,
+                          model: model,
+                          cubit: cubit,
+                          index: index),
+                    );
                   },
                 ),
               )

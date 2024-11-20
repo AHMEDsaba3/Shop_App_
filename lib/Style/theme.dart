@@ -27,7 +27,13 @@ ThemeData darkTheme=ThemeData(
 );
 ThemeData lightTheme=ThemeData(
     appBarTheme: AppBarTheme(
-        backgroundColor: Colors.black,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.light,
+
+      ),
+        backgroundColor: defaultColor,
         titleSpacing: 20,
         elevation: 0.0,
         titleTextStyle:
