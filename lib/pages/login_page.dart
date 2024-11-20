@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   )
-                                : CircularProgressIndicator(),
+                                : CircularProgressIndicator(color: defaultColor,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

@@ -1,5 +1,6 @@
 
 const Login='login';
+const Register='register';
 const Home='home';
 const Categories='categories';
 const Profile='profile';

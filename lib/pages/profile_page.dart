@@ -201,7 +201,7 @@ class ProfilePage extends StatelessWidget {
       ),
     );
     } else {
-      return Center(child: LinearProgressIndicator(color: defaultColor,));
+      return SafeArea(child: LinearProgressIndicator(color: defaultColor,));
     }
   }
 }
