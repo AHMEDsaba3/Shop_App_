@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(
                               height: heightR(30, context),
                             ),
-                            defultTextForm(
+                            defaultTextForm(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your email';
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(
                               height: heightR(10, context),
                             ),
-                            defultTextForm(
+                            defaultTextForm(
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please enter your password';
@@ -164,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
       listener: (context, state) {
         if (state is AppLoginSuccessState) {
           if (state.loginModel.status == true) {
-            defualtFlutterToast(massage:state.loginModel.message??'',state: ToastState.SUCCESS );
+            defaultFlutterToast(massage:state.loginModel.message??'',state: ToastState.SUCCESS );
             CacheHelper.saveData(key: 'token', value: state.loginModel.data!.token).then((value) {
               Navigator.pushReplacement(
                 context,
@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
             },);
 
           } else {
-            defualtFlutterToast(massage:state.loginModel.message??'',state: ToastState.ERROR );
+            defaultFlutterToast(massage:state.loginModel.message??'',state: ToastState.ERROR );
           }
         }
       },

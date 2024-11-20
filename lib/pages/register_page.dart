@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: heightR(30, context),
                         ),
-                        defultTextForm(
+                        defaultTextForm(
                             sufIcon: Icons.email,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -91,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: heightR(10, context),
                         ),
-                        defultTextForm(
+                        defaultTextForm(
                             sufIcon: Icons.person,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -105,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: heightR(10, context),
                         ),
-                        defultTextForm(
+                        defaultTextForm(
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your password';
@@ -129,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         Row(
                           children: [
-                            defultTextForm(
+                            defaultTextForm(
                                 widthRe: 150,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -144,7 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             SizedBox(
                               width: widthR(10, context),
                             ),
-                            defultTextForm(
+                            defaultTextForm(
                                 widthRe: 150,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -161,7 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         SizedBox(
                           height: heightR(10, context),
                         ),
-                        defultTextForm(
+                        defaultTextForm(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';

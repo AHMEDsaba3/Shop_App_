@@ -18,7 +18,7 @@ double sizeR(double x, BuildContext context) {
   return x / 326160 * w * h;
 }
 
-Widget defultTextForm(
+Widget defaultTextForm(
     {required BuildContext context,
     required TextEditingController Controller,
     required String label,
@@ -80,7 +80,7 @@ Widget defultTextForm(
   );
 }
 
-void defualtFlutterToast({required String massage,required ToastState state}){
+void defaultFlutterToast({required String massage,required ToastState state}){
    Fluttertoast.showToast(
       msg: massage,
       toastLength: Toast.LENGTH_LONG,

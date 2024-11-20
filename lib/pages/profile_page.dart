@@ -187,7 +187,7 @@ class ProfilePage extends StatelessWidget {
                                 ),
                                     (Route<dynamic> route) => false,
                               );
-                              defualtFlutterToast(massage: 'Logout done successfully', state: ToastState.SUCCESS);
+                              defaultFlutterToast(massage: 'Logout done successfully', state: ToastState.SUCCESS);
                             }
                           },
                         );

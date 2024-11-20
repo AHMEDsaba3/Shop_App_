@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Constant/constans.dart';
 import 'package:shop_app_api/model/Profile_model.dart';
 import 'package:shop_app_api/model/categories_model.dart';
+import 'package:shop_app_api/model/change_favorite_model.dart';
+import 'package:shop_app_api/model/favorite_model.dart';
 import 'package:shop_app_api/model/home_data_model.dart';
 import 'package:shop_app_api/network/remote/dio_hellper.dart';
 import 'package:shop_app_api/network/remote/endpoint.dart';
@@ -44,10 +46,13 @@ class AppCubit extends Cubit<AppStates> {
     const CartPage(),
     const ProfilePage()
   ];
+  Map<int,bool> favorite={};
 
   HomeDataModel? homeDataModel;
   CategoriesModel? categoriesModel;
   ProfileModel? profileModel;
+  ChangeFavoriteModel? changeFavoriteModel;
+  FavoriteModel? favoriteModel;
   void changeBottomNavBar(int index) {
     currentIndex = index;
     emit(AppBottomNavState());
@@ -57,6 +62,13 @@ class AppCubit extends Cubit<AppStates> {
     emit(HomeDataLoadingState());
     DioHellper.GetData(url: Home,token: token).then((value) {
       homeDataModel=HomeDataModel.fromJson(value.data);
+      homeDataModel!.data!.products.forEach((element) {
+        favorite.addAll({
+          element.id!:element.isFavorite!,
+        });
+      },);
+      print("=======================");
+      print(favorite.toString());
       emit(HomeDataSuccessState());
     },).catchError((e){
       print(e.toString());
@@ -89,6 +101,45 @@ class AppCubit extends Cubit<AppStates> {
     });
 
   }
+
+  void ChangeFavoriteData(int id){
+    favorite[id]= !favorite[id]!;
+    emit(changeFavoriteDataLoadingState());
+    DioHellper.PostData(url: Favorites, data: {
+      'product_id':id,
+    },token: token).then((value) {
+      changeFavoriteModel=ChangeFavoriteModel.fromJson(value.data);
+      // print(changeFavoriteModel?.status);
+      // print(favorite.toString());
+      // print(changeFavoriteModel?.massage);
+      if (changeFavoriteModel?.status==false) {
+        favorite[id] = !favorite[id]!;
+      }
+      GetFavoriteData();
+      emit(changeFavoriteDataSuccessState(changeFavoriteModel));
+    },).catchError((e){
+      favorite[id]= !favorite[id]!;
+      print(e.toString());
+      emit(changeFavoriteDataErrorState());
+    });
+    
+  }
+
+  void GetFavoriteData(){
+    emit(getFavoriteDataLoadingState());
+    DioHellper.GetData(url: Favorites,token: token).then((value) {
+      favoriteModel=FavoriteModel.fromJson(value.data);
+      print("=============================+++++++++++++++++++++");
+      print(favoriteModel!.data!.favoriteData[0].id.toString());
+      print(favoriteModel!.data!.favoriteData[0].productData!.id.toString());
+      emit(HomeDataSuccessState());
+    },).catchError((e){
+      print(e.toString());
+      emit(HomeDataErrorState());
+    });
+
+  }
+
 
 
 }
