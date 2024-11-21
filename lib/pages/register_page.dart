@@ -7,6 +7,7 @@ import 'package:shop_app_api/layout/mian_page.dart';
 import 'package:shop_app_api/network/local/cache_helper.dart';
 import 'package:shop_app_api/pages/home_page.dart';
 import 'package:shop_app_api/pages/login_page.dart';
+import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
 import 'package:shop_app_api/shared/RegisterCubit/registerCubit.dart';
 import 'package:shop_app_api/shared/RegisterCubit/registerState.dart';
 
@@ -50,6 +51,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 );
               },);
+              token = state.loginModel.data!.token!;
+              AppCubit.get(context).GetProfileData();
+              AppCubit.get(context).GetCartData();
+              AppCubit.get(context).GetFavoriteData();
+              AppCubit.get(context).GetHomeData();
+              AppCubit.get(context).GetCategoriesData();
 
             } else {
               defaultFlutterToast(massage:state.loginModel.message??'',state: ToastState.ERROR );

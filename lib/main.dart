@@ -22,7 +22,7 @@ void main() async{
   bool onBoarding=CacheHelper.getData(key: 'onBoarding')??false;
   token=CacheHelper.getData(key: 'token')??'';
 
-  if(onBoarding != null){
+  if(onBoarding != false){
     if(token != ''){
       widget=MainPage();
     }else widget=LoginPage();
