@@ -24,4 +24,5 @@ class AppLoginCubit extends Cubit<Apploginstate>{
       emit(AppLoginErrorState());
     });
   }
+
 }

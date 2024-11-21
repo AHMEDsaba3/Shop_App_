@@ -122,6 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                             email: emailController.text,
                                             password:
                                                 passwordController.text);
+
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -174,6 +175,12 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               );
             },);
+            token = state.loginModel.data!.token!;
+            AppCubit.get(context).GetProfileData();
+            AppCubit.get(context).GetCartData();
+            AppCubit.get(context).GetFavoriteData();
+            AppCubit.get(context).GetHomeData();
+            AppCubit.get(context).GetCategoriesData();
           } else {
             defaultFlutterToast(massage:state.loginModel.message??'',state: ToastState.ERROR );
           }

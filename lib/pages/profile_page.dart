@@ -22,12 +22,12 @@ class ProfilePage extends StatelessWidget {
         var model = cubti.profileModel;
         return Scaffold(
           backgroundColor: Colors.white,
-          body: SafeArea(child: getBody(context,model??null))
+          body: SafeArea(child: getBody(context,model??null,cubti))
         );
       },
     );
   }
-  Widget getBody(context,ProfileModel? model) {
+  Widget getBody(context,ProfileModel? model,AppCubit? cubit) {
     if(model !=null&&model.data != null) {
       return Padding(
       padding:  EdgeInsets.all(sizeR(25, context)),
@@ -180,6 +180,11 @@ class ProfilePage extends StatelessWidget {
                         CacheHelper.removeData(key: 'token').then(
                               (value) {
                             if (value){
+                              cubit!.resetProfile();
+                              cubit.resetCart();
+                              cubit.resetCategories();
+                              cubit.resetFavorite();
+                              cubit.resetHome();
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

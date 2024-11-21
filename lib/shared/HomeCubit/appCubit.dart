@@ -178,5 +178,26 @@ class AppCubit extends Cubit<AppStates> {
 
   }
 
+  void resetProfile() {
+    profileModel = null;
+    emit(InatialState());
+  }
+  void resetHome() {
+    homeDataModel = null;
+    emit(InatialState());
+  }
+  void resetFavorite() {
+    favoriteModel = null;
+    emit(InatialState());
+  }
+  void resetCart() {
+    cartDataModel = null;
+    emit(InatialState());
+  }
+  void resetCategories() {
+    categoriesModel = null;
+    emit(InatialState());
+  }
+
 
 }
