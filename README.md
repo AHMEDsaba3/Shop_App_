@@ -1,5 +1,6 @@
 # shop_app
-![ShopApp](https://github.com/user-attachments/assets/ecb9ddaa-1de2-420e-b04b-3c8f462086eb)
+![ShopApp](https://github.com/user-attachments/assets/ecb9ddaa-1de2-420e-b04b-3c8f462086eb)![shopAppG](https://github.com/user-attachments/assets/b2c7a507-aea0-49ff-bb34-4a20b4a072f8)
+
 
 ![1](https://github.com/user-attachments/assets/6daae286-4e27-4c03-a6f9-1da0afd1d2b3)
 ![2](https://github.com/user-attachments/assets/3835bdec-851e-4573-ac1e-2976053486bb)
