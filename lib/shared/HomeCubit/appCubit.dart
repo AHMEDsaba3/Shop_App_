@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app_api/Constant/constans.dart';
 import 'package:shop_app_api/model/Profile_model.dart';
+import 'package:shop_app_api/model/cart_add_model.dart';
+import 'package:shop_app_api/model/cart_model.dart';
 import 'package:shop_app_api/model/categories_model.dart';
 import 'package:shop_app_api/model/change_favorite_model.dart';
 import 'package:shop_app_api/model/favorite_model.dart';
@@ -47,12 +49,15 @@ class AppCubit extends Cubit<AppStates> {
     const ProfilePage()
   ];
   Map<int,bool> favorite={};
+  Map<int,bool> cartData={};
 
   HomeDataModel? homeDataModel;
   CategoriesModel? categoriesModel;
   ProfileModel? profileModel;
   ChangeFavoriteModel? changeFavoriteModel;
   FavoriteModel? favoriteModel;
+  CartAddDataModel? cartAddDataModel;
+  CartDataModel? cartDataModel;
   void changeBottomNavBar(int index) {
     currentIndex = index;
     emit(AppBottomNavState());
@@ -140,6 +145,38 @@ class AppCubit extends Cubit<AppStates> {
 
   }
 
+  void AddCartData(int id){
+    emit(changeCartDataLoadingState());
+    DioHellper.PostData(url: Cart, data: {
+      'product_id':id,
+    },token: token).then((value) {
+      cartAddDataModel=CartAddDataModel.fromJson(value.data);
+      print(cartAddDataModel?.status);
+      print(cartData.toString());
+      print(cartAddDataModel?.massage);
+      GetCartData();
+      emit(changeCartDataSuccessState(cartAddDataModel));
+    },).catchError((e){
+      print(e.toString());
+      emit(changeCartDataErrorState());
+    });
+
+  }
+
+  void GetCartData(){
+    emit(getCartDataLoadingState());
+    DioHellper.GetData(url: Cart,token: token).then((value) {
+      cartDataModel=CartDataModel.fromJson(value.data);
+      print("=============================__________________________");
+      print(cartDataModel!.data!.itemData[0].id.toString());
+      print(cartDataModel!.data!.itemData[0].productData!.id.toString());
+      emit(getCartDataSuccessState());
+    },).catchError((e){
+      print(e.toString());
+      emit(getCartDataErrorState());
+    });
+
+  }
 
 
 }

@@ -5,9 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_api/Constant/components.dart';
 import 'package:shop_app_api/Constant/constans.dart';
 import 'package:shop_app_api/layout/mian_page.dart';
+import 'package:shop_app_api/main.dart';
 import 'package:shop_app_api/network/local/cache_helper.dart';
 import 'package:shop_app_api/pages/home_page.dart';
 import 'package:shop_app_api/pages/register_page.dart';
+import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
 import 'package:shop_app_api/shared/LoginCubit/appLoginCubit.dart';
 import 'package:shop_app_api/shared/LoginCubit/appLoginState.dart';
 
@@ -120,7 +122,6 @@ class _LoginPageState extends State<LoginPage> {
                                             email: emailController.text,
                                             password:
                                                 passwordController.text);
-
                                       }
                                     },
                                     style: ElevatedButton.styleFrom(
@@ -173,7 +174,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               );
             },);
-
           } else {
             defaultFlutterToast(massage:state.loginModel.message??'',state: ToastState.ERROR );
           }

@@ -45,6 +45,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           }else
             defaultFlutterToast(massage: state.changeFavoriteModel!.massage??'', state: ToastState.SUCCESS);
         }
+        if(state is changeCartDataSuccessState){
+          if(state.cartAddDataModel!.status==false){
+            defaultFlutterToast(massage: state.cartAddDataModel!.massage??'', state: ToastState.ERROR);
+          }else
+            defaultFlutterToast(massage: state.cartAddDataModel!.massage??'', state: ToastState.SUCCESS);
+        }
       },
       builder: (context, state) {
         AppCubit cubit=AppCubit.get(context);
@@ -219,7 +225,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   },
                                   child: Text(
                                     widget.description,
-                                    maxLines: 7,
+                                    maxLines: 5,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         color: Colors.grey,
@@ -256,7 +262,10 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     style: ButtonStyle(
                                         backgroundColor:
                                         MaterialStatePropertyAll(Colors.black)),
-                                    onPressed: null,
+                                    onPressed: () {
+                                      cubit.AddCartData(widget.id);
+                                      print(token);
+                                    },
                                     child: Row(
                                       children: [
                                         Icon(
