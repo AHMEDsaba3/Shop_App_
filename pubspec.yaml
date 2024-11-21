@@ -43,6 +43,10 @@ dependencies:
   flutter_bloc: ^8.1.6
   flutter_snake_navigationbar: ^0.6.1
   fluttertoast: ^8.2.8
+  skeletonizer: ^1.4.2
+
+
+
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +58,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -71,6 +74,7 @@ flutter:
     - assets/
     - assets/adv/
     - assets/ShopApp.png
+    - assets/logo.png
     - assets/OnBoardImage/
 
   # An image asset can refer to one or more resolution-specific "variants", see

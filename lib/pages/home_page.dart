@@ -9,6 +9,7 @@ import 'package:shop_app_api/model/home_data_model.dart';
 import 'package:shop_app_api/pages/product_details_page.dart';
 import 'package:shop_app_api/shared/HomeCubit/appCubit.dart';
 import 'package:shop_app_api/shared/HomeCubit/appStates.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,13 +18,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
-        if(state is changeFavoriteDataSuccessState){
-          if(state.changeFavoriteModel!.status==false){
-            defaultFlutterToast(massage: state.changeFavoriteModel!.massage??'', state: ToastState.ERROR);
-          }else
-          defaultFlutterToast(massage: state.changeFavoriteModel!.massage??'', state: ToastState.SUCCESS);
+        if (state is changeFavoriteDataSuccessState) {
+          if (state.changeFavoriteModel!.status == false) {
+            defaultFlutterToast(
+                massage: state.changeFavoriteModel!.massage ?? '',
+                state: ToastState.ERROR);
+          } else
+            defaultFlutterToast(
+                massage: state.changeFavoriteModel!.massage ?? '',
+                state: ToastState.SUCCESS);
         }
-        
       },
       builder: (context, state) {
         AppCubit cubit = AppCubit.get(context);
@@ -42,7 +46,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget getBody(context, HomeDataModel? model, CategoriesModel? modelCate, AppCubit cubit) {
+  Widget getBody(context, HomeDataModel? model, CategoriesModel? modelCate,
+      AppCubit cubit) {
     List<Widget> advList = [];
 
     if (model != null && model.data != null) {
@@ -58,7 +63,11 @@ class HomePage extends StatelessWidget {
     //     );
     //   }).toList();
     // }
-    if (model != null && model.data != null && advList.isNotEmpty && modelCate != null && modelCate.data != null) {
+    if (model != null &&
+        model.data != null &&
+        advList.isNotEmpty &&
+        modelCate != null &&
+        modelCate.data != null) {
       return Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
@@ -191,15 +200,23 @@ class HomePage extends StatelessWidget {
                   (index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailsPage(
-                          id: model.data!.products[index].id??0,
-                          title: model.data!.products[index].name??'',
-                          description: model.data!.products[index].description??'',
-                          discount: model.data!.products[index].discount??'',
-                          OldPrice: model.data!.products[index].OldPrice??'',
-                          price: model.data!.products[index].price??'',
-                          image: model.data!.products[index].image??'',
-                        ),));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsPage(
+                                id: model.data!.products[index].id ?? 0,
+                                title: model.data!.products[index].name ?? '',
+                                description:
+                                    model.data!.products[index].description ??
+                                        '',
+                                discount:
+                                    model.data!.products[index].discount ?? '',
+                                OldPrice:
+                                    model.data!.products[index].OldPrice ?? '',
+                                price: model.data!.products[index].price ?? '',
+                                image: model.data!.products[index].image ?? '',
+                              ),
+                            ));
                       },
                       child: BuildproductView(context,
                           title: model.data!.products[index].name ?? '',
@@ -223,10 +240,165 @@ class HomePage extends StatelessWidget {
         ),
       );
     } else {
-      return Center(
-          child: LinearProgressIndicator(
-        color: defaultColor,
-      ));
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: heightR(50, context),
+              ),
+              Container(
+                child: RichText(
+                  text: TextSpan(
+                      text: 'Welcome,\n',
+                      style: TextStyle(
+                        fontSize: sizeR(35, context),
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      children: [
+                        TextSpan(
+                            text: 'Our Shop App',
+                            style: TextStyle(
+                              fontSize: sizeR(30, context),
+                              color: Colors.grey,
+                            ))
+                      ]),
+                ),
+              ),
+              SizedBox(
+                height: heightR(30, context),
+              ),
+              Container(
+                  width: double.maxFinite,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SearchBar(
+                        constraints:
+                            BoxConstraints(maxWidth: widthR(275, context)),
+                        backgroundColor: MaterialStatePropertyAll(Colors.white),
+                        hintText: 'Search...',
+                        leading: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.search,
+                              size: sizeR(30, context),
+                            )),
+                      ),
+                    ],
+                  )),
+              SizedBox(
+                height: heightR(30, context),
+              ),
+              //////////advertisements /////////////
+              // if(advList.isNotEmpty)
+              Container(
+                height: heightR(160, context),
+                width: double.maxFinite,
+                child: Skeletonizer(
+                  enabled: true,
+                  child: CarouselSlider(
+                      items: [
+                        Image(image: NetworkImage('https://fps.cdnpk.net/images/home/subhome-ai.webp?w=649&h=649'))
+                      ],
+                      options: CarouselOptions(
+                          initialPage: 0,
+                          enableInfiniteScroll: true,
+                          viewportFraction: 1.0,
+                          reverse: false,
+                          autoPlay: true,
+                          autoPlayInterval: Duration(seconds: 3),
+                          autoPlayAnimationDuration: Duration(seconds: 1),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          scrollDirection: Axis.horizontal)),
+                ),
+              ),
+              // else
+              //   Center(
+              //     child: LinearProgressIndicator()),
+              SizedBox(
+                height: heightR(20, context),
+              ),
+
+              //////////Categories /////////////
+
+              Text(
+                'Categories',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: sizeR(20, context),
+                    fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: heightR(10, context),
+              ),
+              // if(modelCate != null &&
+              //     modelCate!.data != null &&
+              //     modelCate!.data!.cateData != null)
+              Container(
+                height: heightR(45, context),
+                child: Skeletonizer(
+                  enableSwitchAnimation: true,
+                  enabled: true,
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
+                      itemBuilder: (context, index) =>
+                          CategoryWidget(title: 'title'),
+                      separatorBuilder: (context, index) => SizedBox(
+                            width: widthR(10, context),
+                          ),
+                      itemCount: 10),
+                ),
+              ),
+              // else  LinearProgressIndicator(),
+
+              SizedBox(
+                height: heightR(10, context),
+              ),
+
+              //////////Products /////////////
+
+              // if (model != null &&
+              //     model!.data != null &&
+              //     model!.data!.products != null)
+              Skeletonizer(
+                enabled: true,
+                enableSwitchAnimation: true,
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 1 / 1.37,
+                  children: List.generate(
+                    (10),
+                    (index) {
+                      return BuildproductView(context,
+                          title: 'title0000000000000000000000000000',
+                          price: 0000,
+                          oldPrice: 0000,
+                          image:
+                              "https://pixlr.com/images/index/ai-image-generator-one.webp",
+                          discount: 0,
+                          cubit: cubit,
+                          index: index);
+                    },
+                  ),
+                ),
+              )
+              // else
+              //   Center(
+              //     child: CircularProgressIndicator(),
+              //   ),
+            ],
+          ),
+        ),
+      );
     }
   }
 
@@ -313,7 +485,7 @@ class HomePage extends StatelessWidget {
       required dynamic price,
       required dynamic oldPrice,
       required dynamic discount,
-      required HomeDataModel model,
+      HomeDataModel? model,
       required AppCubit cubit,
       required int index}) {
     return Container(
@@ -336,18 +508,22 @@ class HomePage extends StatelessWidget {
                 right: 0,
                 child: IconButton(
                     onPressed: () {
-                      cubit.ChangeFavoriteData(model.data!.products[index].id??0);
+                      cubit.ChangeFavoriteData(
+                          model?.data!.products[index].id ?? 0);
                       // print(model.data!.products[index].id);
                       // print(cubit.favorite[model.data!.products[index].id]);
                     },
                     style: ButtonStyle(
                         backgroundColor: WidgetStatePropertyAll(Colors.white)),
-                    icon: cubit.favorite[model.data!.products[index].id]??false
-                        ? Icon(
-                      CupertinoIcons.heart_fill,
-                      color: defaultColor,
-                    )
-                        :Icon(CupertinoIcons.heart) ),
+                    icon:
+                        cubit.favorite[model?.data!.products[index].id] ?? false
+                            ? Skeleton.keep(
+                                child: Icon(
+                                  CupertinoIcons.heart_fill,
+                                  color: defaultColor,
+                                ),
+                              )
+                            : Skeleton.keep(child: Icon(CupertinoIcons.heart))),
               ),
               if (discount != 0)
                 Container(
