@@ -181,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   SizedBox(
                                     height: heightR(15, context),
                                   ),
-                                  state is! AppRegisterErrorState ?
+                                  state is! AppRegisterLoadingState ?
                                   ElevatedButton(
                                       onPressed: () {
                                         if (formKey.currentState!
